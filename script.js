@@ -46,3 +46,37 @@ const buttons = [
 	document.getElementById('subtract'),
 	document.getElementById('sum'),
 ]
+
+let result = document.getElementById('result')
+
+for (const button of buttons) {
+	button?.addEventListener("click", () => {
+		result.value += button.value;
+	});
+}
+
+const equalButton = document.getElementById("equal")
+
+equalButton?.addEventListener("click", () => {
+	const operator = getOperator(result.value);
+	const [numOne, numTwo] = result.value.split(operator);
+
+	let results = operate(operator, Number(numOne), Number(numTwo));
+	result.value = results;
+});
+
+function getOperator(string) {
+	const operators = ['+', '-', 'x', '/'];
+	const stringToArr = string.split('');
+
+	for (const char of stringToArr) {
+		if (operators.includes(char)) {
+			return char;
+		}
+	}
+}
+
+let resetButton = document.getElementById('reset')
+resetButton.addEventListener('click', () => {
+	result.value = ""
+})
